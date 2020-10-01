@@ -58,8 +58,6 @@ function App() {
     <div className="App">
       <button onClick={(putItemIntoDatabase)}>click</button>
       <br />
-
-
       <input type="text" ref={myInput}></input>
       {todos.map(todo => <p>{todo.title} <br />
 
