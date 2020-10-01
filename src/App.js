@@ -49,7 +49,7 @@ function App() {
 
   function doneYet(id) {
 
-    db.todos.update(id, { finished: true });
+    db.todos.update(id, { finished: true, title: 'hello world' });
     loadData();
   };
 
