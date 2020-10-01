@@ -53,7 +53,6 @@ function App() {
     loadData();
   };
 
-
   return (
     <div className="App">
       <button onClick={(putItemIntoDatabase)}>click</button>
