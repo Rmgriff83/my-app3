@@ -14,24 +14,25 @@ function getId(len) {
 
 const db = new Dexie('todos');
 db.version(1).stores({
-  todos: 'id,title,date,finished'
+  todos: 'id,title,date,finished,priority'
 });
 
 function App() {
 
   const [todos, setTodos] = useState([]);
   const myInput = useRef(null);
+  const priRef = useRef(null);
 
 
   function loadData() {
-    db.todos.toCollection().sortBy('date').then(storedTodos => {//i dont understand this function
+    db.todos.toCollection().sortBy('date').then(storedTodos => {
       setTodos(storedTodos);
     });
   }
 
   useEffect(() => {
     loadData();
-  }, []);//whats with the array?
+  }, []);
 
   async function putItemIntoDatabase() {
     const id = getId(20);
@@ -39,12 +40,14 @@ function App() {
       id: id,
       title: myInput.current.value,
       date: Date.now(),
-      finished: false
+      finished: false,
+      priority: priRef.current.value
     });
 
     loadData();
 
     myInput.current.value = "";
+    priRef.current.value = "";
   }
 
   function doneYet(id) {
@@ -57,10 +60,15 @@ function App() {
     <div className="App">
       <button onClick={(putItemIntoDatabase)}>click</button>
       <br />
-      <input type="text" ref={myInput}></input>
+      <input type="text" ref={myInput}></input> <br />
+      <select name="priority" ref={priRef}>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
       {todos.map(todo => <p>{todo.title} <br />
 
-        {todo.date}
+
         <button onClick={() => doneYet(todo.id)}>Done Yet?</button>
       </p>)}
 
