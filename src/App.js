@@ -48,19 +48,10 @@ function App() {
     db.todos.update(id, { finished: true });
     loadData();
 
-
-
   };
 
-  function makeDisappear(id) {
 
-    setTimeout(function () {
-      db.todos.delete(id);
-      console.log('i deleted one!');
-      loadData();
 
-    }, 5000);
-  };
 
 
 
@@ -75,19 +66,23 @@ function App() {
       </select>
       <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
 
-      {todos.map(todo => <p>
+      {todos.map(todo => <p className="todoList" id={todo.id}>
+
 
 
         <button onClick={() => {
 
+          let thisTodo = document.getElementById(todo.id);
+          thisTodo.style.textDecoration = 'line-through';
 
           doneYet(todo.id)
-          makeDisappear(todo.id)
-
 
         }}>&#9989;</button>
+
+
         {todo.title}<br />
         {todo.priority}
+
 
       </p>)}
 
