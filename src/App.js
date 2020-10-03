@@ -1,16 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Dexie from 'dexie';
 import './App.css';
+import getId from './components/key';
 
-function getId(len) {
 
-  const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
-  let val = "";
-  for (let i = 0; i < len; ++i) {
-    val += chars[Math.floor(Math.random() * chars.length)]
-  };
-  return val;
-};
 
 const db = new Dexie('todos');
 db.version(1).stores({
@@ -58,19 +51,22 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={(putItemIntoDatabase)}>click</button>
-      <br />
-      <input type="text" ref={myInput}></input> <br />
+
+      <label>priority:  </label>
       <select name="priority" ref={priRef}>
         <option value="High">High</option>
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
       </select>
-      {todos.map(todo => <p>{todo.title} <br />
+      <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
+
+      {todos.map(todo => <p>
 
 
-        <button onClick={() => doneYet(todo.id)}>Done Yet?</button>
+        <button onClick={() => doneYet(todo.id)}>&#9989;</button>
+        {todo.title}
       </p>)}
+
 
 
     </div>
