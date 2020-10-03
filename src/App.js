@@ -45,9 +45,24 @@ function App() {
 
   function doneYet(id) {
 
-    db.todos.update(id, { finished: true, title: 'something different' });
+    db.todos.update(id, { finished: true });
     loadData();
+
+
+
   };
+
+  function makeDisappear(id) {
+
+    setTimeout(function () {
+      db.todos.delete(id);
+      console.log('i deleted one!');
+      loadData();
+
+    }, 5000);
+  };
+
+
 
   return (
     <div className="App">
@@ -63,8 +78,17 @@ function App() {
       {todos.map(todo => <p>
 
 
-        <button onClick={() => doneYet(todo.id)}>&#9989;</button>
-        {todo.title}
+        <button onClick={() => {
+
+
+          doneYet(todo.id)
+          makeDisappear(todo.id)
+
+
+        }}>&#9989;</button>
+        {todo.title}<br />
+        {todo.priority}
+
       </p>)}
 
 
