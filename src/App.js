@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Dexie from 'dexie';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import './App.css';
 import getId from './components/key';
 
-
-
-
 const db = new Dexie('todos');
 db.version(1).stores({
-  todos: 'id,title,date,finished,priority,trashed'
+  todos: 'id,title,date,finished,priority,trashed,dueDate'
 });
 
 function App() {
@@ -17,6 +16,7 @@ function App() {
   //const [finished, isFinished] = useState(false);
   const myInput = useRef(null);
   const priRef = useRef(null);
+  const [startDate, setStartDate] = useState(new Date());
 
 
   function loadData() {
@@ -37,7 +37,8 @@ function App() {
       date: Date.now(),
       finished: false,
       priority: priRef.current.value,
-      trashed: false
+      trashed: false,
+      dueDate: startDate
     });
 
     loadData();
@@ -65,6 +66,11 @@ function App() {
     loadData();
   }
 
+  function handleChange(date) {
+    setStartDate(date);
+  }
+
+
   return (
     <div className="App">
 
@@ -74,9 +80,14 @@ function App() {
         <option value="Medium">Medium</option>
         <option value="Low">Low</option>
       </select>
+
+      <DatePicker selected={startDate} onChange={handleChange} />
+
       <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
 
-      {todos.map(todo => <p className="todoList" id={todo.id}>
+      {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>
+
+
 
         <button onClick={() => {
 
@@ -95,7 +106,8 @@ function App() {
         }}>delete</button>
 
         {todo.title}<br />
-        {todo.priority}
+        {todo.priority}<br />
+        {todo.dueDate.toLocaleString()}
 
       </p>)}
 
