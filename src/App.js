@@ -5,14 +5,16 @@ import getId from './components/key';
 
 
 
+
 const db = new Dexie('todos');
 db.version(1).stores({
-  todos: 'id,title,date,finished,priority'
+  todos: 'id,title,date,finished,priority,trashed'
 });
 
 function App() {
 
   const [todos, setTodos] = useState([]);
+  //const [finished, isFinished] = useState(false);
   const myInput = useRef(null);
   const priRef = useRef(null);
 
@@ -34,7 +36,8 @@ function App() {
       title: myInput.current.value,
       date: Date.now(),
       finished: false,
-      priority: priRef.current.value
+      priority: priRef.current.value,
+      trashed: false
     });
 
     loadData();
@@ -50,10 +53,17 @@ function App() {
 
   };
 
+  function hideIt(element) {
 
+    element.style.display = 'none';
 
+  }
 
+  function trashIt(id) {
 
+    db.todos.update(id, { trashed: true });
+    loadData();
+  }
 
   return (
     <div className="App">
@@ -68,8 +78,6 @@ function App() {
 
       {todos.map(todo => <p className="todoList" id={todo.id}>
 
-
-
         <button onClick={() => {
 
           let thisTodo = document.getElementById(todo.id);
@@ -78,15 +86,18 @@ function App() {
           doneYet(todo.id)
 
         }}>&#9989;</button>
+        <button onClick={() => {
 
+          let thisTodoElement = document.getElementById(todo.id);
+          { hideIt(thisTodoElement) }
+          { trashIt(todo.id) }
+
+        }}>delete</button>
 
         {todo.title}<br />
         {todo.priority}
 
-
       </p>)}
-
-
 
     </div>
   );
