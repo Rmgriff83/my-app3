@@ -44,6 +44,8 @@ function App() {
   useEffect(() => {
     loadData();
 
+
+
   }, []);
 
   //another try at the conditional issue
@@ -103,6 +105,15 @@ function App() {
     setStartDate(date);
   }
 
+  db.todos.each((todo) => {
+
+    if (todo.finished === true) {
+
+      //why isn't this staying after page refresh??
+      //its seeing the right ones, but won't let me define css? also its printing every state change 2x?
+      console.log(todo.title);
+    };
+  });
 
   return (
     <div className="App">
@@ -120,17 +131,17 @@ function App() {
 
       {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>
 
-
-
         <button onClick={() => {
 
           let thisTodo = document.getElementById(todo.id);
-          thisTodo.classList.add('finished');
+          thisTodo.classList.toggle('finished');
 
-          doneYet(todo.id)
+          doneYet(todo.id);
 
         }}>&#9989;</button>
         <button onClick={() => {
+
+
 
           let thisTodoElement = document.getElementById(todo.id);
           { hideIt(thisTodoElement) }
