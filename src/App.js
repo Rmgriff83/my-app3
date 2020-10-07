@@ -187,7 +187,7 @@ function App() {
         let form = document.getElementById('form_container');
         form.classList.toggle('hide_form');
 
-      }}>++Add Todo</div><br />
+      }}></div><br />
       <h1>To Do:</h1>
 
       {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>

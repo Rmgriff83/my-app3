@@ -58,11 +58,12 @@
 
   width: 50px;
   height: 45px;
-  border: 1px solid red;
+  
   display: inline-block ;
   margin: 10px;
-  padding: 2px;
+  
   cursor: pointer;
+  background-image: url('./components/imgs/plus.jpg');
 }
 .hide_form{
 
