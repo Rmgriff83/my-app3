@@ -122,6 +122,18 @@ function App() {
     };
   });
 
+  function undoFinished(id) {
+
+    db.todos.update(id, { finished: false });
+    loadData();
+  };
+
+  function undoTrashed(id) {
+
+    db.todos.update(id, { trashed: false });
+    loadData();
+  };
+
   return (
     <div className="App">
 
@@ -142,8 +154,15 @@ function App() {
 
         <button onClick={() => {
 
+          let i = 1;
+          i++;
+
           let thisTodo = document.getElementById(todo.id);
           thisTodo.classList.toggle('finished');
+
+          if (i % 2 === 0) {
+            { undoFinished(todo.id) };
+          }
 
           doneYet(todo.id);
 
@@ -168,6 +187,7 @@ function App() {
 
             thisTodoElement.style.display = 'block';
             undoBtn.remove();
+            { undoTrashed(todo.id) };
 
 
           })
