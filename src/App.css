@@ -41,3 +41,8 @@
 
   text-decoration: line-through;
 }
+
+#undo_box {
+
+  position: fixed;
+}

@@ -118,6 +118,8 @@ function App() {
   return (
     <div className="App">
 
+      <div id="undo_box"></div>
+
       <label>priority:  </label>
       <select name="priority" ref={priRef}>
         <option value="High">High</option>
@@ -141,11 +143,19 @@ function App() {
         }}>&#9989;</button>
         <button onClick={() => {
 
-
+          let div = document.getElementById('undo_box');
 
           let thisTodoElement = document.getElementById(todo.id);
           { hideIt(thisTodoElement) }
           { trashIt(todo.id) }
+          let undoBtn = document.createElement('button');
+          undoBtn.innerHTML = 'undo';
+          div.appendChild(undoBtn);
+          undoBtn.addEventListener('click', () => {
+
+            thisTodoElement.style.display = 'block';
+            undoBtn.remove();
+          })
 
         }}>delete</button>
 
