@@ -68,3 +68,13 @@
 
   visibility: hidden;
 }
+
+.todoList{
+
+  border: 1px solid red;
+  width: 75%;
+}
+
+h1{
+  width: 75%;
+}

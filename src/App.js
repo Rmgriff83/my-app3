@@ -179,7 +179,7 @@ function App() {
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
+        <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add To List</button> <br />
       </div>
 
       <div id="reveal_field" onClick={function () {
@@ -187,7 +187,8 @@ function App() {
         let form = document.getElementById('form_container');
         form.classList.toggle('hide_form');
 
-      }}>++Add Todo</div>
+      }}>++Add Todo</div><br />
+      <h1>To Do:</h1>
 
       {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>
 
@@ -234,7 +235,8 @@ function App() {
         {todo.title}<br />
         {todo.priority}<br />
         {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
-        time left:{(timeToDueDate(todo.dueDate))}
+        time left:{(timeToDueDate(todo.dueDate))}<br />
+        {todo.dueDate.toLocaleString()}
 
       </p>)}
 
