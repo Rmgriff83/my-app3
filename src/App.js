@@ -5,11 +5,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import './App.css';
 import getId from './components/key';
 
+//create a db!
 const db = new Dexie('todos');
 db.version(1).stores({
   todos: 'id,title,date,finished,priority,trashed,dueDate'
 });
 
+//main App function
 function App() {
 
   const [todos, setTodos] = useState([]);
@@ -18,13 +20,15 @@ function App() {
   const priRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
 
-
+  //loads data into table
   function loadData() {
     db.todos.toCollection().sortBy('date').then(storedTodos => {
       setTodos(storedTodos);
 
     });
   }
+
+  //how do i make a conditional based on an object property?
 
   // function deleteFinished() {
 
@@ -36,14 +40,13 @@ function App() {
   // }
 
 
+  //side effect of app running that loads data again
   useEffect(() => {
     loadData();
-    if (db.todos.sortBy === true) {
-      console.log('hllo');
-    }
 
   }, []);
 
+  //another try at the conditional issue
   // function checkIfFinished(id) {
   //   if (id.finished === true) {
   //     let thisTodo = document.getElementById(id);
@@ -54,6 +57,7 @@ function App() {
   // checkIfFinished(db.todos.id);
 
 
+  //puts individual items into table
   async function putItemIntoDatabase() {
     const id = getId(20);
     await db.todos.put({
@@ -66,12 +70,15 @@ function App() {
       dueDate: startDate
     });
 
+    //make sure the new data is in
     loadData();
 
+    //resets field values
     myInput.current.value = "";
     priRef.current.value = "";
   }
 
+  //updates todo finished property if clicked then loads data into db
   function doneYet(id) {
 
     db.todos.update(id, { finished: true });
@@ -79,18 +86,19 @@ function App() {
 
   };
 
+  //hides todo ELEMENT if clicked
   function hideIt(element) {
 
     element.style.display = 'none';
 
   }
-
+  //changes todo trashed property if clicked then loads data into db
   function trashIt(id) {
 
     db.todos.update(id, { trashed: true });
     loadData();
   }
-
+  //sets picked start date for date property
   function handleChange(date) {
     setStartDate(date);
   }
