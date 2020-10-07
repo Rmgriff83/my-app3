@@ -100,6 +100,13 @@ function App() {
     db.todos.update(id, { trashed: true });
     loadData();
   }
+
+  //maybe i'll just faux delete it
+  // function deleteIt(id) {
+
+  //   db.todos.delete(id);
+  //   loadData();
+  // }
   //sets picked start date for date property
   function handleChange(date) {
     setStartDate(date);
@@ -141,6 +148,7 @@ function App() {
           doneYet(todo.id);
 
         }}>&#9989;</button>
+
         <button onClick={() => {
 
           let div = document.getElementById('undo_box');
@@ -151,10 +159,17 @@ function App() {
           let undoBtn = document.createElement('button');
           undoBtn.innerHTML = 'undo';
           div.appendChild(undoBtn);
+          setTimeout(function () {
+            undoBtn.remove();
+          }, 5000);
+
+
           undoBtn.addEventListener('click', () => {
 
             thisTodoElement.style.display = 'block';
             undoBtn.remove();
+
+
           })
 
         }}>delete</button>
