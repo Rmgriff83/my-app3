@@ -15,6 +15,7 @@ db.version(1).stores({
 function App() {
 
   const [todos, setTodos] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(0);
   //const [finished, isFinished] = useState(false);
   const myInput = useRef(null);
   const priRef = useRef(null);
@@ -27,6 +28,8 @@ function App() {
 
     });
   }
+
+
 
   //how do i make a conditional based on an object property?
 
@@ -78,6 +81,8 @@ function App() {
     //resets field values
     myInput.current.value = "";
     priRef.current.value = "";
+    const formContainer = document.getElementById('form_container');
+    formContainer.classList.toggle('hide_form');
   }
 
   //updates todo finished property if clicked then loads data into db
@@ -122,10 +127,13 @@ function App() {
     };
   });
 
-  function undoFinished(id) {
+  function undoFinished(id, i) {
 
-    db.todos.update(id, { finished: false });
-    loadData();
+    if (i % 2 === 0) {
+      console.log(i);//i isn't adding 1 each click?
+      // db.todos.update(id, { finished: true });
+      // loadData();
+    }
   };
 
   function undoTrashed(id) {
@@ -134,21 +142,52 @@ function App() {
     loadData();
   };
 
+  function timeToDueDate(dueDate) {
+
+    let timeNow = new Date();
+
+    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000 / 60);
+    // let counter = setInterval(() => {
+    //   console.log(timeLeft)
+    // }, 1000);
+
+    //this broke my page
+    // setInterval(() => {
+    //   setTimeLeft(timeLeft);
+    // }, 1000);
+    return timeLeft
+    // console.log(counter);  needs to be a stateful variable
+
+
+  }
+
   return (
-    <div className="App">
+    <div id="main" className="App">
+
+
 
       <div id="undo_box"></div>
 
-      <label>priority:  </label>
-      <select name="priority" ref={priRef}>
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-      </select>
+      <div id="form_container">
 
-      <DatePicker selected={startDate} onChange={handleChange} />
+        <label>priority:  </label>
+        <select name="priority" ref={priRef}>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
 
-      <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
+        <DatePicker selected={startDate} onChange={handleChange} />
+
+        <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add Todo</button> <br />
+      </div>
+
+      <div id="reveal_field" onClick={function () {
+
+        let form = document.getElementById('form_container');
+        form.classList.toggle('hide_form');
+
+      }}>++Add Todo</div>
 
       {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>
 
@@ -157,12 +196,12 @@ function App() {
           let i = 1;
           i++;
 
+
           let thisTodo = document.getElementById(todo.id);
           thisTodo.classList.toggle('finished');
 
-          if (i % 2 === 0) {
-            { undoFinished(todo.id) };
-          }
+          { (undoFinished(todo.id, i)) }
+          //  i%2===0 ? {undoFinished(todo.id)}: null; issue with the ternary operator?
 
           doneYet(todo.id);
 
@@ -182,13 +221,11 @@ function App() {
             undoBtn.remove();
           }, 5000);
 
-
           undoBtn.addEventListener('click', () => {
 
             thisTodoElement.style.display = 'block';
             undoBtn.remove();
             { undoTrashed(todo.id) };
-
 
           })
 
@@ -196,7 +233,8 @@ function App() {
 
         {todo.title}<br />
         {todo.priority}<br />
-        {todo.dueDate.toLocaleString()}
+        {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
+        time left:{(timeToDueDate(todo.dueDate))}
 
       </p>)}
 
