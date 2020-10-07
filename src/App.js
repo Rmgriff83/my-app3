@@ -22,12 +22,37 @@ function App() {
   function loadData() {
     db.todos.toCollection().sortBy('date').then(storedTodos => {
       setTodos(storedTodos);
+
     });
   }
 
+  // function deleteFinished() {
+
+  //   db.todos.filter(function (todo) {
+  //     if (todo.finished === true) {
+  //       console.log(todo.title);
+  //     };
+  //   });
+  // }
+
+
   useEffect(() => {
     loadData();
+    if (db.todos.sortBy === true) {
+      console.log('hllo');
+    }
+
   }, []);
+
+  // function checkIfFinished(id) {
+  //   if (id.finished === true) {
+  //     let thisTodo = document.getElementById(id);
+  //     thisTodo.style.textDecoration = 'line-through';
+  //   }
+  // }
+
+  // checkIfFinished(db.todos.id);
+
 
   async function putItemIntoDatabase() {
     const id = getId(20);
@@ -92,7 +117,7 @@ function App() {
         <button onClick={() => {
 
           let thisTodo = document.getElementById(todo.id);
-          thisTodo.style.textDecoration = 'line-through';
+          thisTodo.classList.add('finished');
 
           doneYet(todo.id)
 
