@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Button from '@material-ui/core/Button';
 import './App.css';
 import getId from './components/key';
-import { Container, TextField } from '@material-ui/core';
+import { Container, Select, TextField } from '@material-ui/core';
 
 
 //create a db!
@@ -151,21 +151,21 @@ function App() {
 
 
 
-      <div id="undo_box"></div>
+      <Container id="undo_box"></Container>
 
       <Container id="form_container">
 
         <label>priority:  </label>
-        <select name="priority" ref={priRef}>
+        <Select name="priority" ref={priRef}>
           <option value="ASAP">ASAP</option>
           <option value="Needs to be done">Needs to be done</option>
           <option value="Eh">Eh</option>
           <option value="Take it Easy">Take it Easy</option>
-        </select>
+        </Select>
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <TextField type="text" ref={myInput} placeholder="enter Todo"></TextField><button onClick={(putItemIntoDatabase)}>add To List</button> <br />
+        <TextField type="text" ref={myInput} placeholder="enter Todo"></TextField><Button color="primary" variant="outlined" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
       </Container>
 
       <div id="reveal_field" onClick={function () {
