@@ -132,19 +132,25 @@ function App() {
     let timeNow = new Date();
 
     let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
-    // let counter = setInterval(() => {
-    //   console.log(timeLeft)
-    // }, 1000);
 
-    //this broke my page
-    // setInterval(() => {
-    //   setTimeLeft(timeLeft);
-    // }, 1000);
-    return timeLeft
-    // console.log(counter);  needs to be a stateful variable
+    // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
+
+
+
+    var numhours = Math.floor(((timeLeft % 31536000) % 86400) / 3600);
+    var numminutes = Math.floor((((timeLeft % 31536000) % 86400) % 3600) / 60);
+    var numseconds = (((timeLeft % 31536000) % 86400) % 3600) % 60;
+    return numhours + " hours " + numminutes + " minutes " + numseconds + " seconds";
+
+
+
+
+
 
 
   }
+
+
 
   return (
     <Container id="main" className="App">
@@ -201,9 +207,10 @@ function App() {
 
               <p contentEditable="true" suppressContentEditableWarning="true"><span id={todo.id + 1}>{todo.title}</span></p><br />
               {todo.priority}<br />
-              {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
-        time left:{(timeToDueDate(todo.dueDate))}<br />
-              {todo.dueDate.toLocaleString()}
+
+              <p>Due In:</p>
+              {(timeToDueDate(todo.dueDate))}<br />
+
 
             </Container>)}
         </div>))}
