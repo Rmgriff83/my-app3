@@ -15,7 +15,7 @@ db.version(1).stores({
 function App() {
 
   const [todos, setTodos] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [tick, setTick] = useState(0);
   //const [finished, isFinished] = useState(false);
   const [lastItem, setLastItem] = useState(null);
   const myInput = useRef(null);
@@ -49,35 +49,19 @@ function App() {
 
 
 
-  //how do i make a conditional based on an object property?
-
-  // function deleteFinished() {
-
-  //   db.todos.filter(function (todo) {
-  //     if (todo.finished === true) {
-  //       console.log(todo.title);
-  //     };
-  //   });
-  // }
-
-
   //side effect of app running that loads data again
   useEffect(() => {
     loadData();
+
+    setInterval(() => {
+      setTick(tick => tick + 1)
+    }, 1000)
 
 
 
   }, []);
 
-  //another try at the conditional issue
-  // function checkIfFinished(id) {
-  //   if (id.finished === true) {
-  //     let thisTodo = document.getElementById(id);
-  //     thisTodo.style.textDecoration = 'line-through';
-  //   }
-  // }
 
-  // checkIfFinished(db.todos.id);
 
 
   //puts individual items into table
@@ -111,12 +95,7 @@ function App() {
 
   };
 
-  //hides todo ELEMENT if clicked
-  // function hideIt(element) {
 
-  //   element.style.display = 'none';
-
-  // }
   //changes todo trashed property if clicked then loads data into db
   function trashIt(id, isTrashed) {
 
@@ -130,35 +109,13 @@ function App() {
   }
 
 
-  // function deleteIt(id) {
 
-  //   db.todos.delete(id);
-  //   loadData();
-  // }
 
   //sets picked start date for date property
   function handleChange(date) {
     setStartDate(date);
   }
 
-  db.todos.each((todo) => {
-
-    if (todo.finished === true) {
-
-      //why isn't this staying after page refresh??
-      //its seeing the right ones, but won't let me define css? also its printing every state change 2x?
-      console.log(todo.title);
-    };
-  });
-
-  function undoFinished(id, i) {
-    //i isn't adding 1 each click?
-    if (i % 2 === 0) {
-      console.log(i);
-      // db.todos.update(id, { finished: true });
-      // loadData();
-    }
-  };
 
   function undoTrashed(id) {
 
@@ -171,7 +128,7 @@ function App() {
 
     let timeNow = new Date();
 
-    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000 / 60);
+    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
     // let counter = setInterval(() => {
     //   console.log(timeLeft)
     // }, 1000);
@@ -197,9 +154,10 @@ function App() {
 
         <label>priority:  </label>
         <select name="priority" ref={priRef}>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
+          <option value="ASAP">ASAP</option>
+          <option value="Needs to be done">Needs to be done</option>
+          <option value="Eh">Eh</option>
+          <option value="Take it Easy">Take it Easy</option>
         </select>
 
         <DatePicker selected={startDate} onChange={handleChange} />
@@ -224,7 +182,6 @@ function App() {
         <div id={getId(20)}>
           {todo.trashed ? null : (
 
-
             <div key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
 
               <button onClick={() => {
@@ -248,7 +205,7 @@ function App() {
             </div>)}
         </div>))}
 
-
+      <p style={{ display: "none" }}>{tick}</p>
     </div>
   );
 }
