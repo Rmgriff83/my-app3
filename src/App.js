@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dexie from 'dexie';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Button from '@material-ui/core/Button';
 import './App.css';
 import getId from './components/key';
+import { Container, Select, TextField } from '@material-ui/core';
+
 
 //create a db!
 const db = new Dexie('todos');
@@ -15,7 +18,7 @@ db.version(1).stores({
 function App() {
 
   const [todos, setTodos] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [tick, setTick] = useState(0);
   //const [finished, isFinished] = useState(false);
   const [lastItem, setLastItem] = useState(null);
   const myInput = useRef(null);
@@ -49,35 +52,19 @@ function App() {
 
 
 
-  //how do i make a conditional based on an object property?
-
-  // function deleteFinished() {
-
-  //   db.todos.filter(function (todo) {
-  //     if (todo.finished === true) {
-  //       console.log(todo.title);
-  //     };
-  //   });
-  // }
-
-
   //side effect of app running that loads data again
   useEffect(() => {
     loadData();
+
+    setInterval(() => {
+      setTick(tick => tick + 1)
+    }, 1000)
 
 
 
   }, []);
 
-  //another try at the conditional issue
-  // function checkIfFinished(id) {
-  //   if (id.finished === true) {
-  //     let thisTodo = document.getElementById(id);
-  //     thisTodo.style.textDecoration = 'line-through';
-  //   }
-  // }
 
-  // checkIfFinished(db.todos.id);
 
 
   //puts individual items into table
@@ -111,12 +98,7 @@ function App() {
 
   };
 
-  //hides todo ELEMENT if clicked
-  // function hideIt(element) {
 
-  //   element.style.display = 'none';
-
-  // }
   //changes todo trashed property if clicked then loads data into db
   function trashIt(id, isTrashed) {
 
@@ -130,35 +112,13 @@ function App() {
   }
 
 
-  // function deleteIt(id) {
 
-  //   db.todos.delete(id);
-  //   loadData();
-  // }
 
   //sets picked start date for date property
   function handleChange(date) {
     setStartDate(date);
   }
 
-  db.todos.each((todo) => {
-
-    if (todo.finished === true) {
-
-      //why isn't this staying after page refresh??
-      //its seeing the right ones, but won't let me define css? also its printing every state change 2x?
-      console.log(todo.title);
-    };
-  });
-
-  function undoFinished(id, i) {
-    //i isn't adding 1 each click?
-    if (i % 2 === 0) {
-      console.log(i);
-      // db.todos.update(id, { finished: true });
-      // loadData();
-    }
-  };
 
   function undoTrashed(id) {
 
@@ -171,41 +131,48 @@ function App() {
     if (!dueDate) return 0;
     let timeNow = new Date();
 
-    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000 / 60);
-    // let counter = setInterval(() => {
-    //   console.log(timeLeft)
-    // }, 1000);
+    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
 
-    //this broke my page
-    // setInterval(() => {
-    //   setTimeLeft(timeLeft);
-    // }, 1000);
-    return timeLeft
-    // console.log(counter);  needs to be a stateful variable
+    // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
+
+
+
+    var numhours = Math.floor(((timeLeft % 31536000) % 86400) / 3600);
+    var numminutes = Math.floor((((timeLeft % 31536000) % 86400) % 3600) / 60);
+    var numseconds = (((timeLeft % 31536000) % 86400) % 3600) % 60;
+    return numhours + " hours " + numminutes + " minutes " + numseconds + " seconds";
+
+
+
+
+
 
 
   }
 
+
+
   return (
-    <div id="main" className="App">
+    <Container id="main" className="App">
 
 
 
-      <div id="undo_box"></div>
+      <Container id="undo_box"></Container>
 
-      <div id="form_container">
+      <Container id="form_container">
 
         <label>priority:  </label>
-        <select name="priority" ref={priRef}>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
+        <Select name="priority" ref={priRef}>
+          <option value="ASAP">ASAP</option>
+          <option value="Needs to be done">Needs to be done</option>
+          <option value="Eh">Eh</option>
+          <option value="Take it Easy">Take it Easy</option>
+        </Select>
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add To List</button> <br />
-      </div>
+        <TextField type="text" ref={myInput} placeholder="enter Todo"></TextField><Button color="primary" variant="outlined" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
+      </Container>
 
       <div id="reveal_field" onClick={function () {
 
@@ -215,7 +182,7 @@ function App() {
       }}></div><br />
       <h1>To Do:</h1>
       {lastItem && (
-        <button onClick={undoTrashed}>undo</button>
+        <Button onClick={undoTrashed}>undo</Button>
       )}
 
       {todos.map(todo => (
@@ -224,32 +191,32 @@ function App() {
         <div id={getId(20)}>
           {todo.trashed ? null : (
 
+            <Container key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
 
-            <div key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
-
-              <button onClick={() => {
+              <Button variant="contained" color="primary" onClick={() => {
 
                 doneYet(todo.id, todo.finished);
 
-              }}><span>&#9989;</span></button>
+              }}><span>&#9989;</span></Button>
 
-              <button onClick={() => {
+              <Button variant="contained" color="primary" onClick={() => {
 
                 trashIt(todo.id, todo.trashed)
 
-              }}>delete</button>
+              }}>delete</Button>
 
               <p contentEditable="true" suppressContentEditableWarning="true"><span id={todo.id + 1}>{todo.title}</span></p><br />
               {todo.priority}<br />
-              {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
-        time left:{(timeToDueDate(todo.dueDate))}<br />
-              {todo.dueDate.toLocaleString()}
 
-            </div>)}
+              <p>Due In:</p>
+              {(timeToDueDate(todo.dueDate))}<br />
+
+
+            </Container>)}
         </div>))}
 
-
-    </div>
+      <p style={{ display: "none" }}>{tick}</p>
+    </Container>
   );
 }
 
