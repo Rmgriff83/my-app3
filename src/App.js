@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Button from '@material-ui/core/Button';
 import './App.css';
 import getId from './components/key';
-import { Container, Select, TextField } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 
 
 //create a db!
@@ -128,7 +128,7 @@ function App() {
   };
 
   function timeToDueDate(dueDate) {
-    if (!dueDate) return 0;
+
     let timeNow = new Date();
 
     let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
@@ -147,7 +147,6 @@ function App() {
 
 
 
-
   return (
     <Container id="main" className="App">
 
@@ -158,16 +157,16 @@ function App() {
       <Container id="form_container">
 
         <label>priority:  </label>
-        <Select name="priority" ref={priRef}>
+        <select name="priority" ref={priRef}>
           <option value="ASAP">ASAP</option>
           <option value="Needs to be done">Needs to be done</option>
           <option value="Eh">Eh</option>
           <option value="Take it Easy">Take it Easy</option>
-        </Select>
+        </select>
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <TextField type="text" ref={myInput} placeholder="enter Todo"></TextField><Button color="primary" variant="outlined" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
+        <input type="text" ref={myInput} placeholder="enter Todo"></input><Button color="primary" variant="outlined" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
       </Container>
 
       <div id="reveal_field" onClick={function () {
