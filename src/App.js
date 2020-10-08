@@ -128,7 +128,7 @@ function App() {
   };
 
   function timeToDueDate(dueDate) {
-
+    if (!dueDate) return 0;
     let timeNow = new Date();
 
     let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
