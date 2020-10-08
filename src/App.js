@@ -17,6 +17,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [timeLeft, setTimeLeft] = useState(0);
   //const [finished, isFinished] = useState(false);
+  const [lastItem, setLastItem] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
@@ -28,6 +29,23 @@ function App() {
 
     });
   }
+
+  //tried to update title if changed by user(after being defined)
+  // useEffect(() => {
+
+  //   db.todos.each((todo) => {
+
+  //     let newTitle = document.getElementById(todo.id + 1).textContent;
+
+  //     if (todo.id !== newTitle) {
+  //       db.todos.update(todo.id, { title: newTitle });
+  //       loadData();
+  //     }
+
+
+
+  //   })
+  // }, []);
 
 
 
@@ -86,32 +104,38 @@ function App() {
   }
 
   //updates todo finished property if clicked then loads data into db
-  function doneYet(id) {
+  function doneYet(id, isDone) {
 
-    db.todos.update(id, { finished: true });
+    db.todos.update(id, { finished: !isDone });
     loadData();
 
   };
 
   //hides todo ELEMENT if clicked
-  function hideIt(element) {
+  // function hideIt(element) {
 
-    element.style.display = 'none';
+  //   element.style.display = 'none';
 
-  }
+  // }
   //changes todo trashed property if clicked then loads data into db
-  function trashIt(id) {
+  function trashIt(id, isTrashed) {
 
-    db.todos.update(id, { trashed: true });
+    db.todos.update(id, { trashed: !isTrashed });
+
+    setLastItem(id)
+
+    //check if title changed
+
     loadData();
   }
 
-  //maybe i'll just faux delete it
+
   // function deleteIt(id) {
 
   //   db.todos.delete(id);
   //   loadData();
   // }
+
   //sets picked start date for date property
   function handleChange(date) {
     setStartDate(date);
@@ -128,9 +152,9 @@ function App() {
   });
 
   function undoFinished(id, i) {
-
+    //i isn't adding 1 each click?
     if (i % 2 === 0) {
-      console.log(i);//i isn't adding 1 each click?
+      console.log(i);
       // db.todos.update(id, { finished: true });
       // loadData();
     }
@@ -138,8 +162,9 @@ function App() {
 
   function undoTrashed(id) {
 
-    db.todos.update(id, { trashed: false });
+    db.todos.update(lastItem, { trashed: false });
     loadData();
+    setLastItem(null);
   };
 
   function timeToDueDate(dueDate) {
@@ -189,56 +214,40 @@ function App() {
 
       }}></div><br />
       <h1>To Do:</h1>
+      {lastItem && (
+        <button onClick={undoTrashed}>undo</button>
+      )}
 
-      {todos.map(todo => <p key={todo.id} className="todoList" id={todo.id}>
-
-        <button onClick={() => {
-
-          let i = 1;
-          i++;
+      {todos.map(todo => (
 
 
-          let thisTodo = document.getElementById(todo.id);
-          thisTodo.classList.toggle('finished');
+        <div id={getId(20)}>
+          {todo.trashed ? null : (
 
-          { (undoFinished(todo.id, i)) }
-          //  i%2===0 ? {undoFinished(todo.id)}: null; issue with the ternary operator?
 
-          doneYet(todo.id);
+            <div key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
 
-        }}>&#9989;</button>
+              <button onClick={() => {
 
-        <button onClick={() => {
+                doneYet(todo.id, todo.finished);
 
-          let div = document.getElementById('undo_box');
+              }}><span>&#9989;</span></button>
 
-          let thisTodoElement = document.getElementById(todo.id);
-          { hideIt(thisTodoElement) }
-          { trashIt(todo.id) }
-          let undoBtn = document.createElement('button');
-          undoBtn.innerHTML = 'undo';
-          div.appendChild(undoBtn);
-          setTimeout(function () {
-            undoBtn.remove();
-          }, 5000);
+              <button onClick={() => {
 
-          undoBtn.addEventListener('click', () => {
+                trashIt(todo.id, todo.trashed)
 
-            thisTodoElement.style.display = 'block';
-            undoBtn.remove();
-            { undoTrashed(todo.id) };
+              }}>delete</button>
 
-          })
-
-        }}>delete</button>
-
-        {todo.title}<br />
-        {todo.priority}<br />
-        {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
+              <p contentEditable="true" suppressContentEditableWarning="true"><span id={todo.id + 1}>{todo.title}</span></p><br />
+              {todo.priority}<br />
+              {/* {todo.dueDate.toLocaleString()}<br /> */}<br />
         time left:{(timeToDueDate(todo.dueDate))}<br />
-        {todo.dueDate.toLocaleString()}
+              {todo.dueDate.toLocaleString()}
 
-      </p>)}
+            </div>)}
+        </div>))}
+
 
     </div>
   );
