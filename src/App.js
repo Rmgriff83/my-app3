@@ -134,19 +134,14 @@ function App() {
     let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
 
     // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
+    //secondsInAYear = 31536000; secondsInADay = 86400; secondsInAnHour = 3600; secondsInAMinute = 60;
 
 
 
-    var numhours = Math.floor(((timeLeft % 31536000) % 86400) / 3600);
-    var numminutes = Math.floor((((timeLeft % 31536000) % 86400) % 3600) / 60);
-    var numseconds = (((timeLeft % 31536000) % 86400) % 3600) % 60;
+    var numhours = Math.floor(((timeLeft)) / 3600);
+    var numminutes = Math.floor((((timeLeft)) % 3600) / 60);
+    var numseconds = (((timeLeft) % 86400) % 3600) % 60;
     return numhours + " hours " + numminutes + " minutes " + numseconds + " seconds";
-
-
-
-
-
-
 
   }
 
