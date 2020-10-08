@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dexie from 'dexie';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Button from '@material-ui/core/Button';
 import './App.css';
 import getId from './components/key';
+import { Container, TextField } from '@material-ui/core';
+
 
 //create a db!
 const db = new Dexie('todos');
@@ -144,13 +147,13 @@ function App() {
   }
 
   return (
-    <div id="main" className="App">
+    <Container id="main" className="App">
 
 
 
       <div id="undo_box"></div>
 
-      <div id="form_container">
+      <Container id="form_container">
 
         <label>priority:  </label>
         <select name="priority" ref={priRef}>
@@ -162,8 +165,8 @@ function App() {
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <input type="text" ref={myInput} placeholder="enter Todo"></input><button onClick={(putItemIntoDatabase)}>add To List</button> <br />
-      </div>
+        <TextField type="text" ref={myInput} placeholder="enter Todo"></TextField><button onClick={(putItemIntoDatabase)}>add To List</button> <br />
+      </Container>
 
       <div id="reveal_field" onClick={function () {
 
@@ -173,7 +176,7 @@ function App() {
       }}></div><br />
       <h1>To Do:</h1>
       {lastItem && (
-        <button onClick={undoTrashed}>undo</button>
+        <Button onClick={undoTrashed}>undo</Button>
       )}
 
       {todos.map(todo => (
@@ -182,19 +185,19 @@ function App() {
         <div id={getId(20)}>
           {todo.trashed ? null : (
 
-            <div key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
+            <Container key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
 
-              <button onClick={() => {
+              <Button variant="contained" color="primary" onClick={() => {
 
                 doneYet(todo.id, todo.finished);
 
-              }}><span>&#9989;</span></button>
+              }}><span>&#9989;</span></Button>
 
-              <button onClick={() => {
+              <Button variant="contained" color="primary" onClick={() => {
 
                 trashIt(todo.id, todo.trashed)
 
-              }}>delete</button>
+              }}>delete</Button>
 
               <p contentEditable="true" suppressContentEditableWarning="true"><span id={todo.id + 1}>{todo.title}</span></p><br />
               {todo.priority}<br />
@@ -202,11 +205,11 @@ function App() {
         time left:{(timeToDueDate(todo.dueDate))}<br />
               {todo.dueDate.toLocaleString()}
 
-            </div>)}
+            </Container>)}
         </div>))}
 
       <p style={{ display: "none" }}>{tick}</p>
-    </div>
+    </Container>
   );
 }
 
