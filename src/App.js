@@ -166,7 +166,7 @@ function App() {
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
-        <input type="text" ref={myInput} placeholder="enter Todo"></input><Button color="primary" variant="outlined" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
+        <input type="text" ref={myInput} placeholder="enter Todo"></input><Button color="primary" variant="contained" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
       </Container>
 
       <div id="reveal_field" onClick={function () {
@@ -177,7 +177,7 @@ function App() {
       }}></div><br />
       <h1>To Do:</h1>
       {lastItem && (
-        <Button onClick={undoTrashed}>undo</Button>
+        <Button variant="outlined" onClick={undoTrashed}>undo</Button>
       )}
 
       {todos.map(todo => (
@@ -188,13 +188,13 @@ function App() {
 
             <Container key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
 
-              <Button variant="contained" color="primary" onClick={() => {
+              <Button variant="outlined" color="primary" onClick={() => {
 
                 doneYet(todo.id, todo.finished);
 
               }}><span>&#9989;</span></Button>
 
-              <Button variant="contained" color="primary" onClick={() => {
+              <Button variant="outlined" color="secondary" onClick={() => {
 
                 trashIt(todo.id, todo.trashed)
 
