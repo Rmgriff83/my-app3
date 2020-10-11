@@ -79,3 +79,22 @@
 h1{
   width: 75%;
 }
+
+.asap{
+  color: red;
+}
+
+.needsToBeDone{
+
+  color: orange;
+}
+
+.Eh{
+
+  color: blue;
+}
+
+.takeItEasy{
+
+  color: green;
+}

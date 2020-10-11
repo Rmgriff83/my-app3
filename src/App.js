@@ -21,6 +21,7 @@ function App() {
   const [tick, setTick] = useState(0);
   //const [finished, isFinished] = useState(false);
   const [lastItem, setLastItem] = useState(null);
+  const [currentTitle, setCurrentTitle] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
@@ -55,7 +56,7 @@ function App() {
   //side effect of app running that loads data again
   useEffect(() => {
     loadData();
-
+    //page load every second for countdown timer
     setInterval(() => {
       setTick(tick => tick + 1)
     }, 1000)
@@ -106,7 +107,7 @@ function App() {
 
     setLastItem(id)
 
-    //check if title changed
+
 
     loadData();
   }
@@ -145,12 +146,35 @@ function App() {
 
   }
 
+  // function updateTitle(id, newTitle) {
 
+
+
+  //   db.todos.update(id, { title: currentTitle });
+  //   loadData();
+  // }
+
+  function priorityCheck(id, priority) {
+
+    switch (priority) {
+      case 'ASAP':
+        return <p className="asap">{priority}</p>;
+      //no break statement??? it gave me a warning so i took it out
+      case 'Needs to be done':
+        return <p className="needsToBeDone">{priority}</p>;
+      //no break statement??? it gave me a warning so i took it out
+      case 'Eh':
+        return <p className="Eh">{priority}</p>;
+      //no break statement??? it gave me a warning so i took it out
+      case 'Take it Easy':
+        return <p className="takeItEasy">{priority}</p>;
+
+
+    };
+  }
 
   return (
     <Container id="main" className="App">
-
-
 
       <Container id="undo_box"></Container>
 
@@ -200,8 +224,9 @@ function App() {
 
               }}>delete</Button>
 
-              <p contentEditable="true" suppressContentEditableWarning="true"><span id={todo.id + 1}>{todo.title}</span></p><br />
-              {todo.priority}<br />
+              <p contentEditable="true" suppressContentEditableWarning="true" id={todo.id + 1}><span>{todo.title}</span></p><br />
+
+              {(priorityCheck(todo.id, todo.priority))}<br />
 
               <p>Due In:</p>
               {(timeToDueDate(todo.dueDate))}<br />
