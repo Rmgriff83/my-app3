@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import './App.css';
 import getId from './components/key';
 import { Container } from '@material-ui/core';
-
+import PriorityField from './components/PriorityField';
+import RevealField from './components/RevealField';
 
 //create a db!
 const db = new Dexie('todos');
@@ -180,25 +181,15 @@ function App() {
 
       <Container id="form_container">
 
-        <label>priority:  </label>
-        <select name="priority" ref={priRef}>
-          <option value="ASAP">ASAP</option>
-          <option value="Needs to be done">Needs to be done</option>
-          <option value="Eh">Eh</option>
-          <option value="Take it Easy">Take it Easy</option>
-        </select>
+        <PriorityField current={priRef} />
 
         <DatePicker selected={startDate} onChange={handleChange} />
 
         <input type="text" ref={myInput} placeholder="enter Todo"></input><Button color="primary" variant="contained" onClick={(putItemIntoDatabase)}>add To List</Button> <br />
       </Container>
 
-      <div id="reveal_field" onClick={function () {
-
-        let form = document.getElementById('form_container');
-        form.classList.toggle('hide_form');
-
-      }}></div><br />
+      <RevealField />
+      <br />
       <h1>To Do:</h1>
       {lastItem && (
         <Button variant="outlined" onClick={undoTrashed}>undo</Button>
@@ -230,6 +221,7 @@ function App() {
 
               <p>Due In:</p>
               {(timeToDueDate(todo.dueDate))}<br />
+
 
 
             </Container>)}
