@@ -8,12 +8,17 @@ import getId from './components/key';
 import { Container } from '@material-ui/core';
 import PriorityField from './components/PriorityField';
 import RevealField from './components/RevealField';
+import AddNote from './components/AddNote';
+export { db };
+
 
 //create a db!
 const db = new Dexie('todos');
 db.version(1).stores({
   todos: 'id,title,date,finished,priority,trashed,dueDate'
 });
+
+
 
 //main App function
 function App() {
@@ -25,6 +30,7 @@ function App() {
   const [currentTitle, setCurrentTitle] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
+  const noteMsg = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
 
   //loads data into table
@@ -214,6 +220,7 @@ function App() {
                 trashIt(todo.id, todo.trashed)
 
               }}>delete</Button>
+              <AddNote todo={todo.id} current={noteMsg} />
 
               <p contentEditable="true" suppressContentEditableWarning="true" id={todo.id + 1}><span>{todo.title}</span></p><br />
 
