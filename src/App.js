@@ -8,8 +8,9 @@ import getId from './components/key';
 import { Container } from '@material-ui/core';
 import PriorityField from './components/PriorityField';
 import RevealField from './components/RevealField';
-import AddNote from './components/AddNote';
+// import AddNote from './components/AddNote';
 export { db };
+
 
 
 //create a db!
@@ -30,7 +31,7 @@ function App() {
   const [currentTitle, setCurrentTitle] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
-  const noteMsg = useRef(null);
+  const testInput = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
 
   //loads data into table
@@ -180,6 +181,19 @@ function App() {
     };
   }
 
+  // function addNote(id) {
+
+  //   // db.todos.update(id, { note: 'fuck' });
+  //   // loadData();
+
+
+  //   if (testInput.current.value === null) { return null } else { console.log(testInput.current.value) };
+
+
+  // };
+
+
+
   return (
     <Container id="main" className="App">
 
@@ -201,6 +215,10 @@ function App() {
         <Button variant="outlined" onClick={undoTrashed}>undo</Button>
       )}
 
+      {/* <input type="text" ref={testInput}></input>
+      <button onClick={addNote()}>clicck</button> */}
+
+
       {todos.map(todo => (
 
 
@@ -208,6 +226,8 @@ function App() {
           {todo.trashed ? null : (
 
             <Container key={todo.id} className={["todoList", todo.finished ? 'finished' : null].join(" ")} id={todo.id}>
+
+              <Button variant="outlined" color="secondary"></Button>
 
               <Button variant="outlined" color="primary" onClick={() => {
 
@@ -220,7 +240,10 @@ function App() {
                 trashIt(todo.id, todo.trashed)
 
               }}>delete</Button>
-              <AddNote todo={todo.id} current={noteMsg} />
+
+
+
+
 
               <p contentEditable="true" suppressContentEditableWarning="true" id={todo.id + 1}><span>{todo.title}</span></p><br />
 
@@ -234,7 +257,7 @@ function App() {
             </Container>)}
         </div>))}
 
-      <p style={{ display: "none" }}>{tick}</p>
+      {/* <p style={{ display: "none" }}>{tick}</p> */}
     </Container>
   );
 }
