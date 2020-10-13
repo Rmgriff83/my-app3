@@ -95,6 +95,20 @@ html, body {
   visibility: hidden;
   
 }
+.popIn{
+
+  animation-duration: 1s;
+  animation-name: popIn;
+}
+
+@keyframes popIn{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
 
 
 

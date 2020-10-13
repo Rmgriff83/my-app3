@@ -14,7 +14,7 @@ export { db };
 //create a db!
 const db = new Dexie("todos");
 db.version(1).stores({
-  todos: "id,title,date,finished,priority,trashed,dueDate",
+  todos: "id,title,date,finished,priority,trashed,dueDate,flagged",
 });
 
 //main App function
@@ -74,6 +74,7 @@ function App() {
       priority: priRef.current.value,
       trashed: false,
       dueDate: startDate,
+      flagged: false
     });
 
     //make sure the new data is in
@@ -159,6 +160,20 @@ function App() {
 
   // };
 
+
+
+
+  function flagCheck(isFlagged) {
+
+
+  }
+
+  function flagged(id, isFlagged) {
+
+    db.todos.update(id, { flagged: !isFlagged });
+    loadData();
+  }
+
   return (
     <Container id="main" className="App">
       <Container id="undo_box"></Container>
@@ -208,7 +223,8 @@ function App() {
               )}
               id={todo.id}
             >
-              <Button variant="outlined" color="secondary">&#9873;</Button>
+              {flagCheck(todo.flagged)}
+              <Button onClick={flagged(todo.id, todo.flagged)} variant="outlined" color="secondary">&#9873;</Button>
 
               <Button
                 variant="outlined"
