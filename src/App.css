@@ -10,6 +10,8 @@ html, body {
   font-family: Arial, Tahoma, 'Lucida Sans Unicode', Verdana, sans-serif; 
   text-align: left;
   background-color: #c5c5c5f5; /* backup for image change to image*/
+  background-image: url("/flow.png");
+
 }
 
   h1{
