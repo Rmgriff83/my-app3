@@ -20,10 +20,10 @@ db.version(1).stores({
 //main App function
 function App() {
   const [todos, setTodos] = useState([]);
-  const [tick, setTick] = useState(0);
+  // const [tick, setTick] = useState(0);
   //const [finished, isFinished] = useState(false);
   const [lastItem, setLastItem] = useState(null);
-  const [currentTitle, setCurrentTitle] = useState(null);
+  // const [currentTitle, setCurrentTitle] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
   const testInput = useRef(null);
@@ -58,9 +58,9 @@ function App() {
   useEffect(() => {
     loadData();
     //page load every second for countdown timer
-    setInterval(() => {
-      setTick((tick) => tick + 1);
-    }, 1000);
+    // setInterval(() => {
+    //   setTick((tick) => tick + 1);
+    // }, 1000);
   }, []);
 
   //puts individual items into table
@@ -266,7 +266,7 @@ function App() {
         </div>
       ))}
 
-      {/* <p style={{ display: "none" }}>{tick}</p> */}
+
     </Container>
   );
 }
