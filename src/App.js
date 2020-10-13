@@ -8,17 +8,9 @@ import getId from "./components/key";
 import { Container } from "@material-ui/core";
 import PriorityField from "./components/PriorityField";
 import RevealField from "./components/RevealField";
-
-
 export { db };
 
-
-
-
-
-
-
-//create a db!
+//create a db
 const db = new Dexie("todos");
 db.version(1).stores({
   todos: "id,title,date,finished,priority,trashed,dueDate,flagged",
@@ -46,34 +38,6 @@ function App() {
       });
   }
 
-
-
-
-
-
-
-
-
-  //tried to update title if changed by user(after being defined)
-  // useEffect(() => {
-
-  //   db.todos.each((todo) => {
-
-  //     let newTitle = document.getElementById(todo.id + 1).textContent;
-
-  //     if (todo.id !== newTitle) {
-  //       db.todos.update(todo.id, { title: newTitle });
-  //       loadData();
-  //     }
-
-  //   })
-  // }, []);
-
-
-
-
-
-
   //side effect of app running that loads data again
   useEffect(() => {
     loadData();
@@ -82,13 +46,6 @@ function App() {
     //   setTick((tick) => tick + 1);
     // }, 1000);
   }, []);
-
-
-
-
-
-
-
 
   //puts individual items into table
   async function putItemIntoDatabase() {
@@ -101,7 +58,7 @@ function App() {
       priority: priRef.current.value,
       trashed: false,
       dueDate: startDate,
-      flagged: false
+      flagged: false,
     });
 
     //make sure the new data is in
@@ -123,9 +80,7 @@ function App() {
   //changes todo trashed property if clicked then loads data into db
   function trashIt(id, isTrashed) {
     db.todos.update(id, { trashed: !isTrashed });
-
     setLastItem(id);
-
     loadData();
   }
 
@@ -156,67 +111,29 @@ function App() {
     );
   }
 
-  // function updateTitle(id, newTitle) {
-
-  //   db.todos.update(id, { title: currentTitle });
-  //   loadData();
-  // }
-
   function priorityCheck(id, priority) {
     switch (priority) {
-      case "ASAP":
-        return <p className="asap">{priority}</p>;
-      //no break statement??? it gave me a warning so i took it out
-      case "Needs to be done":
-        return <p className="needsToBeDone">{priority}</p>;
-      //no break statement??? it gave me a warning so i took it out
-      case "Eh":
-        return <p className="Eh">{priority}</p>;
-      //no break statement??? it gave me a warning so i took it out
-      case "Take it Easy":
-        return <p className="takeItEasy">{priority}</p>;
+      case "one":
+        return <p className="one">{priority}</p>;
+      case "two":
+        return <p className="two">{priority}</p>;
+      case "three":
+        return <p className="three">{priority}</p>;
+      case "four":
+        return <p className="four">{priority}</p>;
     }
   }
 
-  // function addNote(id) {
-
-  //   // db.todos.update(id, { note: 'fuck' });
-  //   // loadData();
-
-  //   if (testInput.current.value === null) { return null } else { console.log(testInput.current.value) };
-
-  // };
-
-
-
-
-  function flagCheck(isFlagged) {
-
-
-  }
+  function flagCheck(isFlagged) {}
 
   function flagged(id, isFlagged) {
-
     db.todos.update(id, { flagged: !isFlagged });
     loadData();
   }
 
-
-
-
-
-
-
-
-
-
-
   return (
     <Container id="main" className="App">
       <Container id="undo_box"></Container>
-
-
-
       <Container id="form_container">
         <PriorityField current={priRef} />
         <DatePicker selected={startDate} onChange={handleChange} />
@@ -230,24 +147,14 @@ function App() {
         </Button>{" "}
         <br />
       </Container>
-
-
-
-
-
-
       <RevealField />
       <br />
-      <h1>...</h1>     {/*Fill in? */}
+ 
       {lastItem && (
         <Button variant="outlined" onClick={undoTrashed}>
           undo
         </Button>
       )}
-
-      {/* <input type="text" ref={testInput}></input>
-      <button onClick={addNote()}>clicck</button> */}
-
       {todos.map((todo) => (
         <div id={getId(20)}>
           {todo.trashed ? null : (
@@ -259,7 +166,13 @@ function App() {
               id={todo.id}
             >
               {flagCheck(todo.flagged)}
-              <Button onClick={flagged(todo.id, todo.flagged)} variant="outlined" color="secondary">&#9873;</Button>
+              <Button
+                onClick={flagged(todo.id, todo.flagged)}
+                variant="outlined"
+                color="secondary"
+              >
+                &#9873;
+              </Button>
 
               <Button
                 variant="outlined"
@@ -300,8 +213,6 @@ function App() {
           )}
         </div>
       ))}
-
-
     </Container>
   );
 }
