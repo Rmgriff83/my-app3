@@ -29,9 +29,25 @@ html, body {
     margin-bottom: 1em;
 }
 
-header {} /*add logo, title, background color, and responsiveness*/
+.header {
+    padding: 3%;
+    background-color: rgb(0, 56, 33); 
+    border-bottom: 2px solid #000000;
 
-.container {} /*Add container/wrapper*/
+} /*add logo, title, background color, and responsiveness*/
+
+.container {
+  height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+}
 
 
 #form_container{
