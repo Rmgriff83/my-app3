@@ -199,7 +199,7 @@ function App() {
               )}
               id={todo.id}
             >
-              <Button variant="outlined" color="secondary"></Button>
+              <Button variant="outlined" color="secondary">&#9873;</Button>
 
               <Button
                 variant="outlined"
