@@ -8,8 +8,15 @@ import getId from "./components/key";
 import { Container } from "@material-ui/core";
 import PriorityField from "./components/PriorityField";
 import RevealField from "./components/RevealField";
-// import AddNote from './components/AddNote';
+
+
 export { db };
+
+
+
+
+
+
 
 //create a db!
 const db = new Dexie("todos");
@@ -39,6 +46,14 @@ function App() {
       });
   }
 
+
+
+
+
+
+
+
+
   //tried to update title if changed by user(after being defined)
   // useEffect(() => {
 
@@ -54,6 +69,11 @@ function App() {
   //   })
   // }, []);
 
+
+
+
+
+
   //side effect of app running that loads data again
   useEffect(() => {
     loadData();
@@ -62,6 +82,13 @@ function App() {
     //   setTick((tick) => tick + 1);
     // }, 1000);
   }, []);
+
+
+
+
+
+
+
 
   //puts individual items into table
   async function putItemIntoDatabase() {
@@ -174,11 +201,19 @@ function App() {
     loadData();
   }
 
+
+
+
+
+
+
+
+
+
+
   return (
     <Container id="main" className="App">
       <Container id="undo_box"></Container>
-
-
 
 
 

@@ -4,6 +4,9 @@ import { db } from "../App";
 // import { noteMsg } from '../App';
 import loadData from "../App";
 
+
+
+
 function AddNote(todo) {
   function putMsg(id) {
     db.todos.update(id, { note: "fuck" });
