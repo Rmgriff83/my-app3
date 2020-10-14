@@ -25,7 +25,6 @@ section {
   margin: 0 auto;
   padding: 15px;
   width: 750px;
-  border: 2px solid red;
 }
 
 footer {
@@ -51,8 +50,8 @@ footer {
   border-radius: 15px;
   border: 1px solid rgba(56, 56, 56, 0.233);
   position: relative;
-  top: -40px;
-  left: 15px;
+  top: -44px;
+  left: 5px;
   width: 25px;
   height: 25px;
   background-image: url('./components/imgs/plus.png');
@@ -60,12 +59,12 @@ footer {
 }
 
 .todoList{
-  border: 2px solid red;
-  padding: 10px;
+  margin: 10px;
+  padding: 15px;
   background-color: rgba(255, 255, 255, 0.746);
-  border-radius: 100px;
-
-
+  border: 2px solid rgba(56, 56, 56, 0.192);
+  border-radius: 15px;
+  text-align: left;
 }
 
 .finished{
@@ -79,7 +78,6 @@ footer {
 .hide_form{
   visibility: hidden;
 }
-
 
 .asap{
   color: red;
