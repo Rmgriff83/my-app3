@@ -212,7 +212,7 @@ function App() {
                 suppressContentEditableWarning="true"
                 id={todo.id + 1}
               >
-                <span className="todoTitle">Task: {todo.title}</span>
+                <span className="todoTitle">{todo.title}</span>
               </p>
               <br />
 
