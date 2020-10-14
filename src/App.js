@@ -114,13 +114,13 @@ function App() {
   function priorityCheck(id, priority) {
     switch (priority) {
       case "one":
-        return <p className="one">{priority}</p>;
+        return <p className="priorities">{priority}</p>;
       case "two":
-        return <p className="two">{priority}</p>;
+        return <p className="priorities">{priority}</p>;
       case "three":
-        return <p className="three">{priority}</p>;
+        return <p className="priorities">{priority}</p>;
       case "four":
-        return <p className="four">{priority}</p>;
+        return <p className="priorities">{priority}</p>;
     }
   }
 

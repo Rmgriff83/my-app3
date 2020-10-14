@@ -5,8 +5,8 @@ function PriorityField(priRef) {
     <select name="priority" ref={priRef.current}>
       <option value="one">ASAP</option>
       <option value="two">Urgent</option>
-      <option value="three">Not Important</option>
-      <option value="four">Eventually</option>
+      <option value="notImportant">Not Important</option>
+      <option value="eventually">Eventually</option>
     </select>
   );
 }
