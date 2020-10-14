@@ -133,4 +133,8 @@ footer {
   color: red;
 }
 
+.todoTitle{
+
+  text-decoration: underline;
+}
 

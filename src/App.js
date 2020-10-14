@@ -212,12 +212,13 @@ function App() {
                 suppressContentEditableWarning="true"
                 id={todo.id + 1}
               >
-                <span>{todo.title}</span>
+                <span className="todoTitle">Task: {todo.title}</span>
               </p>
+              <br />
 
 
               {priorityCheck(todo.id, todo.priority)}
-              <br />
+
 
               <p>Due In:</p>
               {timeToDueDate(todo.dueDate)}
