@@ -64,12 +64,12 @@ footer {
 }
 
 .todoList{
-  margin: 10px;
+  margin: auto;
   padding: 15px;
   background-color: rgba(255, 255, 255, 0.746);
   border: 2px solid rgba(56, 56, 56, 0.192);
   border-radius: 15px;
-  text-align: left;
+  text-align: center;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -103,6 +103,21 @@ footer {
 .Eventually{
   color: green;
   font-size: 1.5em;
+}
+
+.unflagged{
+  border:none;
+}
+
+.flagged{
+
+  border: 10px solid red;
+}
+
+.bigFlag{
+
+  font-size: 2em;
+  color: red;
 }
 
 

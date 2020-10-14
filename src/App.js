@@ -19,7 +19,7 @@ db.version(1).stores({
 //main App function
 function App() {
   const [todos, setTodos] = useState([]);
-  // const [tick, setTick] = useState(0);
+  const [tick, setTick] = useState(0);
   //const [finished, isFinished] = useState(false);
   const [lastItem, setLastItem] = useState(null);
   // const [currentTitle, setCurrentTitle] = useState(null);
@@ -42,9 +42,9 @@ function App() {
   useEffect(() => {
     loadData();
     //page load every second for countdown timer
-    // setInterval(() => {
-    //   setTick((tick) => tick + 1);
-    // }, 1000);
+    setInterval(() => {
+      setTick((tick) => tick + 1);
+    }, 1000);
   }, []);
 
   //puts individual items into table
@@ -95,21 +95,21 @@ function App() {
     setLastItem(null);
   }
 
-  // function timeToDueDate(dueDate) {
-  //   let timeNow = new Date();
+  function timeToDueDate(dueDate) {
+    let timeNow = new Date();
 
-  //   let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
+    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
 
-  //   // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
-  //   //secondsInAYear = 31536000; secondsInADay = 86400; secondsInAnHour = 3600; secondsInAMinute = 60;
+    //   // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
+    //   //secondsInAYear = 31536000; secondsInADay = 86400; secondsInAnHour = 3600; secondsInAMinute = 60;
 
-  //   var numhours = Math.floor(timeLeft / 3600);
-  //   var numminutes = Math.floor((timeLeft % 3600) / 60);
-  //   var numseconds = ((timeLeft % 86400) % 3600) % 60;
-  //   return (
-  //     numhours + " hours " + numminutes + " minutes " + numseconds + " seconds"
-  //   );
-  // }
+    var numhours = Math.floor(timeLeft / 3600);
+    var numminutes = Math.floor((timeLeft % 3600) / 60);
+    var numseconds = ((timeLeft % 86400) % 3600) % 60;
+    return (
+      numhours + " hours " + numminutes + " minutes " + numseconds + " seconds"
+    );
+  }
 
   function priorityCheck(id, priority) {
     switch (priority) {
@@ -130,7 +130,12 @@ function App() {
     }
   }
 
-  function flagCheck(isFlagged) { }
+  function flagCheck(flagged) {
+
+    if (flagged === true) {
+      return <span className="bigFlag">&#9873;</span>
+    }
+  }
 
   function flagged(id, isFlagged) {
     db.todos.update(id, { flagged: !isFlagged });
@@ -139,8 +144,8 @@ function App() {
 
   return (
     <Container id="main" className="App">
-      <Container id="undo_box"></Container>
-      <Container id="form_container">
+      <Container children="" id="undo_box"></Container>
+      <Container children="" id="form_container">
         <PriorityField current={priRef} />
         <DatePicker selected={startDate} onChange={handleChange} />
         <input type="text" ref={myInput} placeholder="enter Todo"></input>
@@ -165,6 +170,7 @@ function App() {
         <div id={getId(20)}>
           {todo.trashed ? null : (
             <Container
+              children=""
               key={todo.id}
               className={["todoList", todo.finished ? "finished" : null].join(
                 " "
@@ -173,9 +179,10 @@ function App() {
             >
               {flagCheck(todo.flagged)}
               <Button
-                onClick={flagged(todo.id, todo.flagged)}
+                onClick={() => { flagged(todo.id, todo.flagged) }}
                 variant="outlined"
                 color="secondary"
+
               >
                 &#9873;
               </Button>
@@ -213,7 +220,7 @@ function App() {
               <br />
 
               <p>Due In:</p>
-              {/* {timeToDueDate(todo.dueDate)} */}
+              {timeToDueDate(todo.dueDate)}
               <br />
             </Container>
           )}
