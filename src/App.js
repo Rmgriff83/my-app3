@@ -8,7 +8,7 @@ import getId from "./components/key";
 import { Container } from "@material-ui/core";
 import PriorityField from "./components/PriorityField";
 import RevealField from "./components/RevealField";
-export { db };
+// export { db };
 
 //create a db
 const db = new Dexie("todos");
@@ -25,7 +25,7 @@ function App() {
   // const [currentTitle, setCurrentTitle] = useState(null);
   const myInput = useRef(null);
   const priRef = useRef(null);
-  const testInput = useRef(null);
+  //const testInput = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
 
   //loads data into table
@@ -95,32 +95,38 @@ function App() {
     setLastItem(null);
   }
 
-  function timeToDueDate(dueDate) {
-    let timeNow = new Date();
+  // function timeToDueDate(dueDate) {
+  //   let timeNow = new Date();
 
-    let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
+  //   let timeLeft = Math.floor((dueDate.getTime() - timeNow.getTime()) / 1000);
 
-    // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
-    //secondsInAYear = 31536000; secondsInADay = 86400; secondsInAnHour = 3600; secondsInAMinute = 60;
+  //   // taken from https://stackoverflow.com/questions/8211744/convert-time-interval-given-in-seconds-into-more-human-readable-form
+  //   //secondsInAYear = 31536000; secondsInADay = 86400; secondsInAnHour = 3600; secondsInAMinute = 60;
 
-    var numhours = Math.floor(timeLeft / 3600);
-    var numminutes = Math.floor((timeLeft % 3600) / 60);
-    var numseconds = ((timeLeft % 86400) % 3600) % 60;
-    return (
-      numhours + " hours " + numminutes + " minutes " + numseconds + " seconds"
-    );
-  }
+  //   var numhours = Math.floor(timeLeft / 3600);
+  //   var numminutes = Math.floor((timeLeft % 3600) / 60);
+  //   var numseconds = ((timeLeft % 86400) % 3600) % 60;
+  //   return (
+  //     numhours + " hours " + numminutes + " minutes " + numseconds + " seconds"
+  //   );
+  // }
 
   function priorityCheck(id, priority) {
     switch (priority) {
       case "ASAP":
         return <p className="asap">{priority}</p>;
+
       case "Urgent":
         return <p className="Urgent">{priority}</p>;
+
       case "Not Important":
         return <p className="NotImportant">{priority}</p>;
+
       case "Eventually":
         return <p className="Eventually">{priority}</p>;
+
+      default:
+        return <p className="asap">{priority}</p>;
     }
   }
 
@@ -207,7 +213,7 @@ function App() {
               <br />
 
               <p>Due In:</p>
-              {timeToDueDate(todo.dueDate)}
+              {/* {timeToDueDate(todo.dueDate)} */}
               <br />
             </Container>
           )}
