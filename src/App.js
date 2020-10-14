@@ -214,14 +214,14 @@ function App() {
               >
                 <span>{todo.title}</span>
               </p>
-              <br />
+
 
               {priorityCheck(todo.id, todo.priority)}
               <br />
 
               <p>Due In:</p>
               {timeToDueDate(todo.dueDate)}
-              <br />
+
             </Container>
           )}
         </div>
