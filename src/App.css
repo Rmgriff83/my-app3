@@ -1,5 +1,5 @@
 html, body {
-  background-color: #ece3cb;
+  background-color: #ece3cbad;
   text-align: center;
   font-size: 16px;
 
@@ -13,7 +13,7 @@ html, body {
   padding: 5px;
   border-radius: 15px;
   border: 2px solid rgba(56, 56, 56, 0.192);
-  background-color: rgba(219, 218, 218, 0.746);
+  background-color: rgba(228, 226, 226, 0.993);
 }
 
 header {
@@ -31,16 +31,23 @@ section {
 
 footer {
   font-family: Arial, Tahoma, 'Lucida Sans Unicode', Verdana, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
   text-align: center;
   position: fixed;
   bottom: 0%;
   left: 0%;
   width: 100%;
-  padding: 12.5px;
+  padding-top: 10px;
   color: #c5c5c5; 
   background-color: #063f0fe3; 
   font-family: 'Nunito', sans-serif;
+  height: 35px;
+  transition-duration: 0.900s;
+}
+
+#footer:hover {
+  height: 5px;
+  padding: 1px;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -63,14 +70,21 @@ footer {
   cursor: pointer;
 }
 
+#reveal_field:hover{
+  border: 2px solid green;
+}
+
 .todoList{
   margin: auto;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.746);
-  border: 2px solid rgba(56, 56, 56, 0.192);
+  background-color: rgba(241, 241, 241, 0.205);
+  border: 1px solid rgba(56, 56, 56, 0.192);
   border-radius: 15px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
+  font-size: 1.35em;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .finished{
@@ -87,22 +101,23 @@ footer {
 
 .asap{
   color: red;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .Urgent{
   color: orange;
-  font-size: 1.5em;
+  font-size: 1.3em;
+  
 }
 
 .NotImportant{
   color: blue;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .Eventually{
   color: green;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .unflagged{
@@ -110,13 +125,11 @@ footer {
 }
 
 .flagged{
-
   border: 10px solid red;
 }
 
 .bigFlag{
-
-  font-size: 2em;
+  font-size: 1.5em;
   color: red;
 }
 
