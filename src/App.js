@@ -113,18 +113,18 @@ function App() {
 
   function priorityCheck(id, priority) {
     switch (priority) {
-      case "one":
-        return <p className="priorities">{priority}</p>;
-      case "two":
-        return <p className="priorities">{priority}</p>;
-      case "three":
-        return <p className="priorities">{priority}</p>;
-      case "four":
-        return <p className="priorities">{priority}</p>;
+      case "ASAP":
+        return <p className="asap">{priority}</p>;
+      case "Urgent":
+        return <p className="Urgent">{priority}</p>;
+      case "Not Important":
+        return <p className="NotImportant">{priority}</p>;
+      case "Eventually":
+        return <p className="Eventually">{priority}</p>;
     }
   }
 
-  function flagCheck(isFlagged) {}
+  function flagCheck(isFlagged) { }
 
   function flagged(id, isFlagged) {
     db.todos.update(id, { flagged: !isFlagged });
@@ -149,7 +149,7 @@ function App() {
       </Container>
       <RevealField />
       <br />
- 
+
       {lastItem && (
         <Button variant="outlined" onClick={undoTrashed}>
           undo

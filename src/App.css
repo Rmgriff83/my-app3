@@ -90,17 +90,17 @@ footer {
   font-size: 1.5em;
 }
 
-.needsToBeDone{
+.Urgent{
   color: orange;
   font-size: 1.5em;
 }
 
-.Eh{
+.NotImportant{
   color: blue;
   font-size: 1.5em;
 }
 
-.takeItEasy{
+.Eventually{
   color: green;
   font-size: 1.5em;
 }
