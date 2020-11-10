@@ -5,3 +5,4 @@
 [1014/105854.245:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\rmgri\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\83ea8c80-d901-46f6-b7da-cce01cb838c8: The system cannot find the path specified. (0x3)
 [1014/110340.909:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
 [1014/112637.122:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1014/130614.311:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

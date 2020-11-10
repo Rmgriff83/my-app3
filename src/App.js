@@ -107,7 +107,8 @@ function App() {
     var numminutes = Math.floor((timeLeft % 3600) / 60);
     var numseconds = ((timeLeft % 86400) % 3600) % 60;
     return (
-      numhours + " hours " + numminutes + " minutes " + numseconds + " seconds"
+      <div className="countdown"> {numhours + ":" + numminutes + ":" + numseconds}
+      </div>
     );
   }
 
@@ -119,10 +120,10 @@ function App() {
       case "Urgent":
         return <p className="Urgent">{priority}</p>;
 
-      case "Not Important":
-        return <p className="NotImportant">{priority}</p>;
+      case "Eh":
+        return <p className="Eh">{priority}</p>;
 
-      case "Eventually":
+      case "Eventually..":
         return <p className="Eventually">{priority}</p>;
 
       default:
@@ -166,10 +167,10 @@ function App() {
           undo
         </Button>
       )}
-      {todos.map((todo) => (
+      {todos.slice(0).reverse().map((todo) => (
         <div id={getId(20)}>
           {todo.trashed ? null : (
-            <Container
+            <div
               children=""
               key={todo.id}
               className={["todoList", todo.finished ? "finished" : null].join(
@@ -177,42 +178,47 @@ function App() {
               )}
               id={todo.id}
             >
-              {flagCheck(todo.flagged)}
-              <Button
-                onClick={() => { flagged(todo.id, todo.flagged) }}
-                variant="outlined"
-                color="secondary"
+              <div >
+                <br />
+                <Button
+                  onClick={() => { flagged(todo.id, todo.flagged) }}
+                  variant="outlined"
+                  color="secondary"
+                  className="btns"
 
-              >
-                &#9873;
+                >
+                  &#9873;
               </Button>
-
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => {
-                  doneYet(todo.id, todo.finished);
-                }}
-              >
-                <span>&#9989;</span>
-              </Button>
-
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => {
-                  trashIt(todo.id, todo.trashed);
-                }}
-              >
-                delete
-              </Button>
+                <br />
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => {
+                    doneYet(todo.id, todo.finished);
+                  }}
+                >
+                  <span>&#9989;</span>
+                </Button>
+                <br />
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    trashIt(todo.id, todo.trashed);
+                  }}
+                >
+                  <span className="trashcan">&#128465;</span>
+                </Button>
+              </div>
 
               <p
                 contentEditable="true"
                 suppressContentEditableWarning="true"
                 id={todo.id + 1}
+                className="todoTitle"
               >
-                <span className="todoTitle">{todo.title}</span>
+                {flagCheck(todo.flagged)}
+                <span>{todo.title}</span>
               </p>
               <br />
 
@@ -220,10 +226,10 @@ function App() {
               {priorityCheck(todo.id, todo.priority)}
 
 
-              <p>Due In:</p>
+
               {timeToDueDate(todo.dueDate)}
 
-            </Container>
+            </div>
           )}
         </div>
       ))}
